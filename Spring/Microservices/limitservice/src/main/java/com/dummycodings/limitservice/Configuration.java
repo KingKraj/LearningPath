@@ -21,5 +21,7 @@ public class Configuration {
 
     private int minimum;
     private int maximum;
+    
+    
 
 }
