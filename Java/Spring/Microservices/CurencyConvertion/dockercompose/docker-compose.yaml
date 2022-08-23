@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  currency-exchange:
+    image: mmv2-currency-exchange:1.0
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+
+  naming-server:
+    image: mmv2-currency-exchange:1.0
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
+
+networks:
+  currency-network:
