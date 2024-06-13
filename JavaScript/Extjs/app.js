@@ -43,43 +43,61 @@ Ext.application({
       //     );
       //   },
     });
-    userStore.on("load", function (store, records, success, operation, eOpts) {
-      if (success) {
-        // Access raw data using the operation
-        var rawData = operation.getResponse().responseText;
-        console.log(" inside operation =============>", operation);
-
-        // You can also decode the raw data if it's in JSON format
-        // var decodedData = Ext.decode(rawData);
-        // console.log(decodedData);
-        var modifiedData = modifyRawData(JSON.parse(rawData));
-        // operation.setRawResponse(JSON.stringify(modifiedData));
-        // operation.response.responseText =JSON.stringify(modifiedData)
-        // operation.setResponse(JSON.stringify(modifiedData));
-        store.each(function (record) {
-          modifyRecord(record);
-        });
-        var newRecord = Ext.create("User", {
-          name: "New User",
-          some:"some added value"
-        });
-        store.add(newRecord);
-        // store.setResponse({
-        //   responseText: JSON.stringify(modifiedData),
-        //   status: 200,
-        // });
-        console.log(" After Modified >>>>>>>>>>>>>>>>>> ", userStore);
-      } else {
-        console.error("Failed to load data.");
-      }
+    var sourceData = userStore.getData().items.map(function (record) {
+      console.log("Record ===============>", record);
+      return record.data;
     });
+
+    var destinationStore = Ext.create("Ext.data.Store", {
+      model: userStore.getModel(),
+      data: userStore,
+    });
+    destinationStore.on(
+      "load",
+      function (store, records, success, operation, eOpts) {
+        if (success) {
+          // Access raw data using the operation
+          var rawData = operation.getResponse().responseText;
+          console.log(" inside operation =============>", operation);
+
+          // You can also decode the raw data if it's in JSON format
+          // var decodedData = Ext.decode(rawData);
+          // console.log(decodedData);
+          var modifiedData = modifyRawData(JSON.parse(rawData));
+          // operation.setRawResponse(JSON.stringify(modifiedData));
+          // operation.response.responseText =JSON.stringify(modifiedData)
+          // operation.setResponse(JSON.stringify(modifiedData));
+          store.each(function (record) {
+            modifyRecord(record);
+          });
+          var newRecord = Ext.create("User", {
+            name: "New User",
+            some: "some added value",
+          });
+          store.add(newRecord);
+          // store.setResponse({
+          //   responseText: JSON.stringify(modifiedData),
+          //   status: 200,
+          // });
+          console.log(" After Modified >>>>>>>>>>>>>>>>>> ", destinationStore);
+        } else {
+          console.error("Failed to load data.");
+        }
+      }
+    );
     // Create a grid to display the data
-    console.log(" Before Load to Grid Panel >>>>>>>>>>>>>>>>>> ", userStore);
+    console.log(
+      " Before Load to Grid Panel >>>>>>>>>>>>>>>>>> ",
+      destinationStore
+    );
     var grid = Ext.create("Ext.grid.Panel", {
       title: "User Grid",
-      store: userStore,
+      store: destinationStore,
       features: [{ ftype: "grouping", groupHeaderTpl: ["Name: {some}"] }],
-      columns: [{ id: "nameId", text: "Name", dataIndex: "name" },{ id: "someId", text: "Some", dataIndex: "some" }],
+      columns: [
+        { id: "nameId", text: "Name", dataIndex: "name" },
+        { id: "someId", text: "Some", dataIndex: "some" },
+      ],
       height: 300,
       width: 500,
       renderTo: Ext.getBody(),
@@ -90,7 +108,7 @@ function modifyRawData(data) {
   // Your modification logic here
   // For example, add a new property to each record
   // data.forEach(function (record) {
-    console.log("just Prining:",data.name)
+  console.log("just Prining:", data.name);
   data.name = "Modified Value";
   console.log(" After Modified =============>", data);
   // });

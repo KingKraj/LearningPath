@@ -1,0 +1,4 @@
+<project name="FullyJavaWithAnt">
+    <!--    <property name="project" value="${ant.project}"/>-->
+    <echo>Starting to build The ${ant.project.name}</echo>
+</project>
