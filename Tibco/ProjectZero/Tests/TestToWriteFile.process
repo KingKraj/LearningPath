@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/Commons/Header" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/Models/Context" xmlns:ns="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/SharedProcesses/WriteToFileRequest">
+    <pd:name>Tests/TestToWriteFile.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>504</pd:startX>
+    <pd:startY>243</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>804</pd:endX>
+    <pd:endY>243</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1768153477643</pd:targetNamespace>
+    <pd:activity name="Write to File">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>651</pd:x>
+        <pd:y>245</pd:y>
+        <config>
+            <processName>/Processes/SharedProcesses/WriteToFile.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns:WriteToFileRequest>
+                <pfx:Header>
+                    <pfx2:Context>
+                        <pfx2:correlationId>
+                            <xsl:value-of select="&quot;1234234&quot;"/>
+                        </pfx2:correlationId>
+                    </pfx2:Context>
+                    <pfx:timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </pfx:timestamp>
+                </pfx:Header>
+                <ns:Body>
+                    <ns:message>
+                        <xsl:value-of select="&quot;Sample message&quot;"/>
+                    </ns:message>
+                </ns:Body>
+            </ns:WriteToFileRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Write to File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write to File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
