@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/Commons/Header" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/Models/Context" xmlns:ns="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/SharedProcesses/WriteToFileRequest" xmlns:ns2="http://www.tibco.com/schemas/ProjectZero/Resources/Schemas/Services/ParseRenderCatalogXMLRequest">
+    <pd:name>Tests/TestRenderCatalogXML.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>349</pd:startX>
+    <pd:startY>242</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>682</pd:endX>
+    <pd:endY>241</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1768153477643</pd:targetNamespace>
+    <pd:activity name="Parse&amp;RenderCatalogXML">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>527</pd:x>
+        <pd:y>196</pd:y>
+        <config>
+            <processName>/Processes/SharedProcesses/Parse&amp;RenderCatalogXML.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ParseRenderCatalogXMLRequest>
+                <pfx:Header>
+                    <pfx2:Context>
+                        <pfx2:correlationId>
+                            <xsl:value-of select="&quot;1234234&quot;"/>
+                        </pfx2:correlationId>
+                    </pfx2:Context>
+                    <pfx:timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </pfx:timestamp>
+                </pfx:Header>
+                <ns2:Body>
+                    <ns2:sourcePath>
+                        <xsl:value-of select="&quot;C:\Kraj\Coding\LearningPath\Tibco\ProjectZero\files\input\&quot;"/>
+                    </ns2:sourcePath>
+                    <ns2:sourceFileName>
+                        <xsl:value-of select="&quot;catalog.xml&quot;"/>
+                    </ns2:sourceFileName>
+                </ns2:Body>
+            </ns2:ParseRenderCatalogXMLRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse&amp;RenderCatalogXML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse&amp;RenderCatalogXML</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
